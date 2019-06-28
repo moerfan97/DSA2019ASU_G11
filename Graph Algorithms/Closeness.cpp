@@ -193,5 +193,4 @@ void main ()
 		C[i]=float(V-1)/sum;
 		cout<<setprecision(7)<<C[i]<<endl;
 	}
-	
 }
