@@ -54,12 +54,11 @@ for i in range(1,len(lines)):
     weight=int(inputs[2])
     #creating edges
     edges.append((node1,node2,{'weight':weight}))
-edges
+
 
 #adding edges to graph
 g.add_edges_from(edges)
-print(g.edges())
-print(g.nodes())
+
 
 node_centre=list(g.degree(g.nodes))
 sorted_node_centre=sorted(node_centre,key=itemgetter(1),reverse=True)
@@ -71,7 +70,7 @@ for i in range(1,len(sorted_node_centre)):
 
 cols=['red','blue','green','yellow']
 
-node_centre
+
 
 
 node_colors=[]
@@ -99,12 +98,12 @@ for i in node_centre:
         else:
              node_colors.append(cols[3])     
         
-    
+        """
 print(levels)    
 print(node_colors)
 print(node_centre)
 sorted_node_centre
-
+ """
 
 #labels of edges
 pos=nx.spring_layout(g)
@@ -112,6 +111,8 @@ nx.draw(g,pos,node_color=node_colors,node_size=900,with_labels=True)
 labels = nx.get_edge_attributes(g,'weight')
 nx.draw_networkx_edge_labels(g,pos,edge_labels=labels)
 plt.savefig("degree centrality")
+print("///////////DEGREE CENTRALITY////////////")
+print(g.degree(g.nodes))
 plt.show()#degree centrality
 
 
@@ -122,8 +123,7 @@ for node in node_centre:
     closness.append((node[0],nx.closeness_centrality(g,node[0],'weight')))
     
 sorted_node_close=sorted(closness,key=itemgetter(1),reverse=True)
-print(closness)
-print(sorted_node_close)
+
 
 levels=[]
 levels.append(sorted_node_close[0][1])
@@ -132,7 +132,7 @@ for i in range(1,len(sorted_node_close)):
         levels.append(sorted_node_close[i][1])
 
 cols=['red','blue','green','yellow']   
-levels
+
 
 node_colors=[]
 for i in closness:
@@ -169,6 +169,8 @@ nx.draw(g,pos,node_color=node_colors,node_size=900,with_labels=True)
 labels = nx.get_edge_attributes(g,'weight')
 nx.draw_networkx_edge_labels(g,pos,edge_labels=labels)
 plt.savefig("closeness centrality")
+print("//////////CLOSENESS CENTRALITY//////////")
+print(closness)
 plt.show()# closness centrality
 
 #open pictures
@@ -179,4 +181,70 @@ plt.show()# closness centrality
 #Run c++ app
 #os.startfile("a.exe")
 
-nx.betweenness_centrality(g)
+bet=nx.betweenness_centrality(g,None,False,'weight')
+bet
+
+
+levels=[]
+for i in range(len(bet)):
+    if(~(bet.get(i)in levels)):
+        levels.append(bet.get(i))
+        
+
+levels=list(set(levels))
+levels=sorted(levels)
+levels.reverse()
+
+
+node_colors=[]
+cols=['red','blue','green','yellow']   
+
+for i in bet.items():
+    
+    
+    if(len(levels)==1):
+         node_colors.append(cols[0])
+     
+    elif(len(levels)==2):
+        
+        if(i[1]==levels[0]):
+            node_colors.append(cols[0])
+        else:
+             node_colors.append(cols[1])
+    
+    elif(len(levels)>=3):
+        
+        if(i[1]==levels[0]):
+            node_colors.append(cols[0])
+        elif (i[1]==levels[1]):
+             node_colors.append(cols[1])
+        elif (i[1]==levels[2]):
+            node_colors.append(cols[2])   
+        else:
+             node_colors.append(cols[3])     
+                
+                
+        
+
+
+
+#labels of edges
+pos=nx.spring_layout(g)
+nx.draw(g,pos,node_color=node_colors,node_size=900,with_labels=True)
+labels = nx.get_edge_attributes(g,'weight')
+nx.draw_networkx_edge_labels(g,pos,edge_labels=labels)
+plt.savefig("betweeness centrality")
+print("////////////BETWEENESS CENTRALITY////////////")
+print(bet)
+plt.show()# betweeness centrality
+
+
+"""
+#open pictures
+os.startfile("closeness centrality.png")
+os.startfile("degree centrality.png")
+
+"""
+
+#Run c++ app
+os.startfile("a.exe")

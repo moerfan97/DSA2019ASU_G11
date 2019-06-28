@@ -25,12 +25,14 @@ class Graph
   
 public: 
     Graph(int V);  // Constructor 
-  
+  list <int> *uadj;
     // function to add an edge to graph 
     void addEdge(int u, int v, int w); 
   
     // prints shortest path from s 
     vector<int> shortestPath(int s); 
+    int degreeOfCentrality(int src);
+
 
 	vector<int> numberOfShortestpathes(int s);
 }; 
@@ -40,14 +42,21 @@ Graph::Graph(int V)
 { 
     this->V = V; 
     adj = new list<iPair> [V]; 
+      uadj =new list<int> [V];
 } 
   
 void Graph::addEdge(int u, int v, int w) 
 { 
     adj[u].push_back(make_pair(v, w)); 
     adj[v].push_back(make_pair(u, w)); 
+    uadj[u].push_back(v); 
+	uadj[v].push_back(u); 
 } 
-   
+int Graph::degreeOfCentrality(int src)
+{
+	return uadj[src].size();
+}
+ 
 vector<int> Graph::shortestPath(int src) 
 { 
     // Create a priority queue to store vertices that 
@@ -174,6 +183,7 @@ int main ()
 {
 	int V ,m; 
 	int a,b,c;
+    int l;
 	vector<int> X;
 	//cin>>V>>m;
 
@@ -232,6 +242,15 @@ int main ()
         cout<<a<<" "<<b<<" "<<c<<endl;
        g.addEdge(a,b,c); 
     }
+
+ cout<<"///////////////////Centrality//////////////////////"<<endl; 
+    
+    	for (int i=0; i < V; i++)
+	{
+		l=g.degreeOfCentrality(i);
+		cout<<i<<"\t"<<l<<"\n";
+	}
+
 cout<<"///////////////////Closeness//////////////////////"<<endl;
 	/// this section for closeness
 
@@ -241,8 +260,10 @@ cout<<"///////////////////Closeness//////////////////////"<<endl;
 		X=g.shortestPath(i);
 		sum=VectorSum(X);
 		C[i]=float(V-1)/sum;
-		cout<<setprecision(7)<<C[i]<<endl;
+		cout<<i<<"\t"<< setprecision(7)<<C[i]<<endl;
 	}
+
+
 	system("pause");
     return 0;
 }
