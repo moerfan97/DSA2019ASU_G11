@@ -45,8 +45,7 @@ void Graph::addEdge(int u, int v, int w)
     adj[u].push_back(make_pair(v, w)); 
     adj[v].push_back(make_pair(u, w)); 
 } 
-  
-// Prints shortest paths from src to all other vertices 
+   
 vector<int> Graph::shortestPath(int src) 
 { 
     // Create a priority queue to store vertices that 
