@@ -2,7 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from operator import itemgetter
 import os
-import subprocess
+
 
 
 # create graph
