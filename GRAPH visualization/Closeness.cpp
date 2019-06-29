@@ -186,7 +186,7 @@ int main ()
     int l;
 	vector<int> X;
 	//cin>>V>>m;
-
+   
     ifstream myfile;
     string line;
     
@@ -212,6 +212,7 @@ int main ()
     }
   	float *C=new float[V];
     Graph g(V);
+    vector <vector<int>> ml (V);
  	cout<<V<<" "<<m<<endl;
 
   while ( getline (myfile,line) )
@@ -240,6 +241,8 @@ int main ()
         }
         c=stoi(temp3);
         cout<<a<<" "<<b<<" "<<c<<endl;
+        ml[a].push_back(b);
+	    ml[b].push_back(a);
        g.addEdge(a,b,c); 
     }
 
@@ -247,7 +250,7 @@ int main ()
     
     	for (int i=0; i < V; i++)
 	{
-		l=g.degreeOfCentrality(i);
+		l=ml[i].size();
 		cout<<i<<"\t"<<l<<"\n";
 	}
 
