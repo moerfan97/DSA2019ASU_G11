@@ -283,7 +283,7 @@ void main ()
 			vector<vector<iPair>> parents = g.getParents(src);
 			for(int des=src+1 ; des<V ; des++)
 			{
-							
+				if(node != src && node != des)	
 				ans += (double)g.numOfnodesInSP( parents,src, des,node) / g.numberOfShortestpathes(src).second[des];
 			}
 		}
